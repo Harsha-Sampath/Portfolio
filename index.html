@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jane Doe | Software Developer Portfolio</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configure Tailwind for Inter font and Dark Mode -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // Enables dark mode based on the 'dark' class on the HTML tag
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-500': '#10b981', // Emerald green
+                        'primary-600': '#059669',
+                        'dark-bg': '#0f172a',    // Slate 900
+                        'dark-card': '#1e293b',  // Slate 800
+                        'light-bg': '#f1f5f9',   // Slate 100
+                        'light-card': '#ffffff',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom styles for smoother scrolling and layout */
+        html {
+            scroll-behavior: smooth;
+        }
+        .section {
+            padding-top: 5rem;
+            padding-bottom: 5rem;
+        }
+        /* Style for the dark mode toggle icon */
+        .icon {
+            display: inline-block;
+            width: 1.5rem;
+            height: 1.5rem;
+            stroke-width: 2;
+            stroke: currentColor;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        /* SVG Icons - Using simple sun/moon for toggle */
+        .sun-icon { display: none; }
+        .dark .sun-icon { display: inline-block; }
+        .dark .moon-icon { display: none; }
+    </style>
+</head>
+
+<body class="font-sans bg-light-bg text-gray-800 dark:bg-dark-bg dark:text-gray-200 transition-colors duration-500">
+
+    <!-- Header & Navigation -->
+    <header class="sticky top-0 z-50 bg-light-card/95 dark:bg-dark-card/95 backdrop-blur-md shadow-lg border-b border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+            <!-- Logo/Name -->
+            <a href="#home" id="header-logo-name" class="text-2xl font-bold text-primary-600 dark:text-primary-500 hover:text-primary-500 dark:hover:text-primary-600 transition">Loading...</a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex space-x-6">
+                <a href="#about" class="text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-500 transition duration-300">About</a>
+                <a href="#skills" class="text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-500 transition duration-300">Skills</a>
+                <a href="#projects" class="text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-500 transition duration-300">Projects</a>
+                <a href="#contact" class="text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-500 transition duration-300">Contact</a>
+            </nav>
+
+            <!-- Menu and Dark Mode Button Container -->
+            <div class="flex items-center space-x-4">
+                <!-- Dark Mode Toggle -->
+                <button id="theme-toggle" class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-dark-bg transition duration-300 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                    <!-- Moon Icon (Light Mode) -->
+                    <svg class="icon moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <!-- Sun Icon (Dark Mode) -->
+                    <svg class="icon sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-button" class="md:hidden p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-dark-bg transition duration-300 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <nav id="mobile-menu" class="hidden md:hidden bg-light-card dark:bg-dark-card border-t border-gray-200 dark:border-gray-700 py-2">
+            <a href="#about" class="block px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-bg transition" onclick="toggleMobileMenu()">About</a>
+            <a href="#skills" class="block px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-bg transition" onclick="toggleMobileMenu()">Skills</a>
+            <a href="#projects" class="block px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-bg transition" onclick="toggleMobileMenu()">Projects</a>
+            <a href="#contact" class="block px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-bg transition" onclick="toggleMobileMenu()">Contact</a>
+        </nav>
+    </header>
+
+    <main class="max-w-7xl mx-auto">
+        <!-- 1. Hero Section (Dynamically Loaded) -->
+        <section id="home" class="section flex items-center min-h-[calc(100vh-4rem)]">
+            <div class="px-4 sm:px-6 lg:px-8 text-center md:text-left" id="hero-content-container">
+                <!-- Loading Indicator for Hero Section -->
+                <div id="hero-loading" class="col-span-full text-center py-10 text-gray-500 dark:text-gray-400">
+                    <svg class="animate-spin h-8 w-8 text-primary-500 mx-auto mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Loading hero content...
+                </div>
+                <!-- Content will be injected here by JS -->
+            </div>
+        </section>
+
+        <!-- 2. About Section (Dynamically Loaded) -->
+        <section id="about" class="section bg-light-card dark:bg-dark-card shadow-xl rounded-2xl mx-4 sm:mx-6 lg:mx-8">
+            <div id="about-content-container" class="px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
+                <!-- Loading Indicator for About Section -->
+                <div id="about-loading" class="col-span-full text-center py-10 text-gray-500 dark:text-gray-400">
+                    <svg class="animate-spin h-8 w-8 text-primary-500 mx-auto mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Loading about section content...
+                </div>
+                <!-- Content will be injected here by JS -->
+            </div>
+        </section>
+
+        <!-- 3. Skills Section (Dynamically Loaded) -->
+        <section id="skills" class="section">
+            <div class="px-4 sm:px-6 lg:px-8 text-center">
+                <h3 class="text-xs font-semibold uppercase tracking-widest text-primary-500 mb-2">Expertise</h3>
+                <h2 class="text-4xl font-bold mb-12">Technologies & Skills</h2>
+
+                <div id="skills-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <!-- Loading Indicator while fetching data from Google Sheet -->
+                    <div id="skills-loading" class="col-span-full text-center py-10 text-gray-500 dark:text-gray-400">
+                        <svg class="animate-spin h-8 w-8 text-primary-500 mx-auto mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Loading skills from Google Sheet...
+                    </div>
+                    <!-- Dynamic Skill Cards will replace the loading indicator here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Projects Section (Dynamically Loaded) -->
+        <section id="projects" class="section bg-light-card dark:bg-dark-card rounded-2xl mx-4 sm:mx-6 lg:mx-8 shadow-xl">
+            <div class="px-4 sm:px-6 lg:px-8 text-center">
+                <h3 class="text-xs font-semibold uppercase tracking-widest text-primary-500 mb-2">My Work</h3>
+                <h2 class="text-4xl font-bold mb-12">Featured Projects</h2>
+
+                <div id="projects-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Loading Indicator for Projects -->
+                    <div id="projects-loading" class="col-span-full text-center py-10 text-gray-500 dark:text-gray-400">
+                        <svg class="animate-spin h-8 w-8 text-primary-500 mx-auto mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Loading projects from Google Sheet...
+                    </div>
+                    <!-- Dynamic Project Cards will be rendered here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Contact Section -->
+        <section id="contact" class="section">
+            <div class="px-4 sm:px-6 lg:px-8 text-center">
+                <h3 class="text-xs font-semibold uppercase tracking-widest text-primary-500 mb-2">Get In Touch</h3>
+                <h2 class="text-4xl font-bold mb-6">Contact Me</h2>
+                <p class="text-xl text-gray-500 dark:text-gray-400 mb-10 max-w-2xl mx-auto">
+                    I am currently open to new opportunities. Whether you have a project idea or just want to chat, feel free to reach out!
+                </p>
+
+                <div class="max-w-xl mx-auto p-8 bg-light-card dark:bg-dark-card rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700">
+                    <form id="contact-form" class="space-y-6">
+                        <!-- Name Input -->
+                        <div>
+                            <label for="name" class="block text-left text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Name</label>
+                            <input type="text" id="name" name="name" required class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-dark-bg focus:ring-primary-500 focus:border-primary-500 transition duration-300 text-gray-900 dark:text-gray-100" placeholder="Your Name">
+                        </div>
+
+                        <!-- Email Input -->
+                        <div>
+                            <label for="email" class="block text-left text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+                            <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-dark-bg focus:ring-primary-500 focus:border-primary-500 transition duration-300 text-gray-900 dark:text-gray-100" placeholder="your.email@example.com">
+                        </div>
+
+                        <!-- Message Input -->
+                        <div>
+                            <label for="message" class="block text-left text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Message</label>
+                            <textarea id="message" name="message" rows="5" required class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-dark-bg focus:ring-primary-500 focus:border-primary-500 transition duration-300 text-gray-900 dark:text-gray-100" placeholder="Tell me about your project..."></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-lg text-white bg-primary-600 hover:bg-primary-500 transition duration-300 transform hover:scale-[1.01] focus:outline-none focus:ring-4 focus:ring-primary-300">
+                            Send Message
+                        </button>
+                        <p id="form-message" class="text-center mt-4 hidden text-sm font-medium text-green-600 dark:text-green-400"></p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-200 dark:bg-gray-900 mt-12 py-8 border-t border-gray-300 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-gray-600 dark:text-gray-400 text-lg mb-4">Connect with me</p>
+            <div class="flex justify-center space-x-6 mb-6">
+                <!-- Social Links Placeholder -->
+                <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-primary-500 transition duration-300">LinkedIn</a>
+                <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-primary-500 transition duration-300">GitHub</a>
+                <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-primary-500 transition duration-300">Twitter</a>
+            </div>
+            <p class="text-sm text-gray-500 dark:text-gray-500">
+                &copy; 2025 Jane Doe. All rights reserved. Built with Tailwind CSS.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // --- JavaScript for UX/UI enhancements ---
+
+        const html = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const contactForm = document.getElementById('contact-form');
+        const formMessage = document.getElementById('form-message');
+
+        // 1. Dark Mode Toggle
+        // Check for preferred theme (default to light if no preference)
+        const currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+        // Set initial theme (you can also use localStorage for persistence, but keeping it simpler here)
+        if (currentTheme === 'dark') {
+            html.classList.add('dark');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+        });
+
+
+        // 2. Mobile Menu Toggle
+        window.toggleMobileMenu = function() {
+            mobileMenu.classList.toggle('hidden');
+        }
+        mobileMenuButton.addEventListener('click', toggleMobileMenu);
+
+
+        // 3. Simple Form Submission (Frontend only)
+        contactForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            
+            // In a real application, you would send this data to a backend API here.
+            
+            // Hide the form message initially
+            formMessage.classList.add('hidden');
+
+            // Simulate loading
+            const originalButtonText = event.target.querySelector('button').textContent;
+            event.target.querySelector('button').textContent = 'Sending...';
+            event.target.querySelector('button').disabled = true;
+
+            setTimeout(() => {
+                // Show success message
+                formMessage.textContent = 'Thank you! Your message has been sent successfully.';
+                formMessage.classList.remove('hidden', 'text-red-600');
+                formMessage.classList.add('text-green-600');
+                
+                // Reset button and form
+                event.target.querySelector('button').textContent = originalButtonText;
+                event.target.querySelector('button').disabled = false;
+                contactForm.reset();
+
+            }, 1500); // Simulate network delay
+        });
+
+        // --- Data Loading Configuration ---
+
+        const SHEET_ID = '191NTf5rwA1luHcPtukyQZWrQmQwjEnk6_BA8_XerIe0';
+        // GIDs for the specific tabs in the spreadsheet
+        const SKILLS_GID = '0'; 
+        const PROJECTS_GID = '1866001848'; 
+        const HERO_GID = '1862484444';
+        const ABOUT_GID = '1036571997'; // New GID for About Section
+
+        const skillsGrid = document.getElementById('skills-grid');
+        const projectsGrid = document.getElementById('projects-grid');
+        const heroContentContainer = document.getElementById('hero-content-container');
+        const aboutContentContainer = document.getElementById('about-content-container'); 
+        const headerLogoName = document.getElementById('header-logo-name'); // Reference to the header logo
+
+        /**
+         * Helper function to fetch data from a Google Sheet tab and parse the JSON.
+         * @param {string} gid - The GID of the specific sheet tab.
+         * @returns {Promise<object>} The parsed data object.
+         */
+        async function fetchSheetData(gid) {
+            const SPREADSHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${gid}`;
+            const response = await fetch(SPREADSHEET_URL);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const text = await response.text();
+            // Google's Visualization API wraps the JSON in a function call. We need to extract the raw JSON string.
+            const jsonText = text.replace('/*O_o*/\n', '').replace('google.visualization.Query.setResponse(', '').slice(0, -2);
+            return JSON.parse(jsonText);
+        }
+
+        // 4a. Load Skills from Google Sheet
+        async function loadSkills() {
+            try {
+                const data = await fetchSheetData(SKILLS_GID);
+                skillsGrid.innerHTML = ''; 
+
+                const rows = data.table.rows;
+                // Assumes: Col A: Icon/Emoji (c[0]), Col B: Title (c[1]), Col C: Description (c[2])
+                const skillsData = rows.map(row => ({
+                    icon: row.c[0]?.v || '❓',
+                    title: row.c[1]?.v || 'Unknown Skill',
+                    description: row.c[2]?.v || 'No description available.',
+                }));
+                
+                if (skillsData.length === 0) {
+                     skillsGrid.innerHTML = '<p class="col-span-full text-center py-10 text-gray-500 dark:text-gray-400">Could not find any skills data. Ensure the sheet is populated and columns A, B, C are used.</p>';
+                     return;
+                }
+
+                // Render the skill cards dynamically
+                skillsData.forEach(skill => {
+                    const card = document.createElement('div');
+                    card.className = 'p-6 bg-light-card dark:bg-dark-card rounded-xl shadow-lg hover:shadow-primary-500/30 transition duration-300 transform hover:translate-y-[-4px] border border-gray-100 dark:border-gray-700';
+                    card.innerHTML = `
+                        <div class="text-4xl mb-3 text-primary-500">${skill.icon}</div>
+                        <h4 class="text-xl font-semibold mb-1">${skill.title}</h4>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">${skill.description}</p>
+                    `;
+                    skillsGrid.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error("Error loading skills from Google Sheet:", error);
+                skillsGrid.innerHTML = `<p class="col-span-full text-center py-10 text-red-500 dark:text-red-400">Failed to load skills. Please ensure the Google Sheet tab is shared publicly ("Publish to the web" setting).</p>`;
+            }
+        }
+
+        // 4b. Load Projects from Google Sheet
+        async function loadProjects() {
+            try {
+                const data = await fetchSheetData(PROJECTS_GID);
+                projectsGrid.innerHTML = ''; // Clear the loading indicator
+
+                const rows = data.table.rows;
+                // Assumes: Col A: ImagePlaceholder (c[0]), Col B: Title (c[1]), Col C: Description (c[2]), Col D: Technologies (c[3]), Col E: Demo URL (c[4])
+                const projectsData = rows.map(row => ({
+                    image:row.c[0]?.v || 'Untitled Project',
+                    title: row.c[1]?.v || 'Untitled Project',
+                    description: row.c[2]?.v || 'No description available.',
+                    technologies: row.c[3]?.v || '', 
+                    demoUrl: row.c[4]?.v || '#',
+                }));
+                
+                if (projectsData.length === 0) {
+                     projectsGrid.innerHTML = '<p class="col-span-full text-center py-10 text-gray-500 dark:text-gray-400">Could not find any projects data. Ensure the sheet is populated and columns A-E are used.</p>';
+                     return;
+                }
+
+                // Render the project cards dynamically
+                projectsData.forEach(project => {
+                    // Create technology tags from a comma-separated string
+                    const techTags = project.technologies.split(',')
+                        .map(tech => tech.trim())
+                        .filter(tech => tech)
+                        .map(tech => `<span class="px-3 py-1 bg-primary-100 text-primary-600 rounded-full dark:bg-dark-bg/50 dark:text-primary-500">${tech}</span>`)
+                        .join('');
+
+                    const card = document.createElement('div');
+                    card.className = 'p-6 bg-light-bg dark:bg-dark-card/50 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 group hover:shadow-2xl transition duration-500';
+                    
+                    // Use a placeholder image generator, including the project title for context
+                    const imageUrl = `https://placehold.co/600x400/059669/ffffff?text=${encodeURIComponent(project.title.replace(/\s/g, '+'))}`;
+
+                    card.innerHTML = `
+                        <img src="${imageUrl}" alt="${project.image} Image" class="rounded-lg mb-4 object-cover w-full h-40">
+                        <h4 class="text-2xl font-semibold mb-2 group-hover:text-primary-500 transition">${project.title}</h4>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">${project.description}</p>
+                        <div class="flex flex-wrap gap-2 text-sm font-medium">${techTags}</div>
+                        <a href="${project.demoUrl}" target="_blank" class="mt-4 text-primary-500 font-semibold hover:underline inline-block">View Demo &rarr;</a>
+                    `;
+                    projectsGrid.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error("Error loading projects from Google Sheet:", error);
+                projectsGrid.innerHTML = `<p class="col-span-full text-center py-10 text-red-500 dark:text-red-400">Failed to load projects. Please ensure the Google Sheet tab (GID: ${PROJECTS_GID}) is shared publicly ("Publish to the web" setting).</p>`;
+            }
+        }
+
+        // 4c. Load Hero Section from Google Sheet
+        async function loadHeroSection() {
+            try {
+                const data = await fetchSheetData(HERO_GID);
+                const rows = data.table.rows;
+
+                // Assuming content values are in the second column (c[1])
+                // Row indices: 0: Pre-Title, 1: Main Title, 2: Subtitle, 3: Description
+                const preTitle = rows[0]?.c[1]?.v || "Hello, I'm";
+                const mainTitle = rows[1]?.c[1]?.v || "Jane Doe.";
+                const subtitle = rows[2]?.c[1]?.v || "A Full-Stack Developer creating modern web solutions.";
+                const description = rows[3]?.c[1]?.v || "I build scalable, responsive, and user-friendly applications using the latest web technologies. Let's create something amazing together.";
+
+                // Clean the main title (remove trailing period if exists) for use in the header logo
+                const cleanMainTitle = mainTitle.replace(/\.$/, '').trim();
+                if (headerLogoName) {
+                    headerLogoName.textContent = cleanMainTitle;
+                    // Also update the document title
+                    document.title = `${cleanMainTitle} | Software Developer Portfolio`;
+                }
+
+                // Construct the HTML content, replacing the loading indicator
+                heroContentContainer.innerHTML = `
+                    <p class="text-lg font-semibold text-primary-500 mb-3 animate-pulse">${preTitle}</p>
+                    <h1 class="text-6xl sm:text-7xl lg:text-8xl font-extrabold mb-4 leading-tight text-gray-900 dark:text-white">
+                        ${mainTitle}
+                    </h1>
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-600 dark:text-gray-400 mb-8">
+                        ${subtitle}
+                    </h2>
+                    <p class="max-w-3xl mx-auto md:mx-0 text-xl text-gray-500 dark:text-gray-400 mb-10">
+                        ${description}
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="#projects" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full shadow-lg text-white bg-primary-600 hover:bg-primary-500 transition duration-300 transform hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-primary-300">
+                            View Projects
+                        </a>
+                        <a href="#contact" class="inline-flex items-center justify-center px-8 py-3 border-2 border-primary-600 text-base font-medium rounded-full text-primary-600 dark:text-primary-500 hover:bg-primary-600 hover:text-white transition duration-300 transform hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-primary-300">
+                            Get In Touch
+                        </a>
+                    </div>
+                `;
+
+            } catch (error) {
+                console.error("Error loading Hero Section from Google Sheet:", error);
+                if (headerLogoName) {
+                    headerLogoName.textContent = 'Error Loading Name';
+                }
+                heroContentContainer.innerHTML = `<div class="col-span-full text-center py-10 text-red-500 dark:text-red-400">Failed to load Hero content. Please ensure the Google Sheet tab (GID: ${HERO_GID}) is shared publicly.</div>`;
+            }
+        }
+        
+        // 4d. Load About Section from Google Sheet
+        async function loadAboutSection() {
+            try {
+                const data = await fetchSheetData(ABOUT_GID);
+                const rows = data.table.rows;
+
+                // Assuming content values are in the second column (c[1])
+                // Row indices: 0: Subtitle, 1: Title, 2: Paragraph 1, 3: Paragraph 2, 4: Image Text/URL
+                const subtitle = rows[0]?.c[1]?.v || "My Story";
+                const title = rows[1]?.c[1]?.v || "About Me";
+                const paragraph1 = rows[2]?.c[1]?.v || "I am a passionate developer with 5+ years of experience in modern web technologies.";
+                const paragraph2 = rows[3]?.c[1]?.v || "I focus on delivering exceptional user experiences and scalable, clean code.";
+                // Use the image text/URL for the placeholder text/image
+                const imageText = rows[4]?.c[1]?.v || "Jane+Doe"; 
+                // Fallback to a placeholder image using the text as the title
+                const imageUrl = `https://placehold.co/400x400/10b981/ffffff?text=${encodeURIComponent(imageText.replace(/\s/g, '+'))}`;
+
+                // Construct the HTML content, replacing the loading indicator
+                aboutContentContainer.innerHTML = `
+                    <!-- Image Placeholder -->
+                    <div class="order-2 md:order-1 flex justify-center">
+                        <img src="${imageUrl}" alt="${imageText} Portrait" class="w-64 h-64 md:w-80 md:h-80 object-cover rounded-full border-4 border-primary-500 shadow-2xl transition duration-500 hover:shadow-primary-500/50">
+                    </div>
+                    <!-- Content -->
+                    <div class="order-1 md:order-2">
+                        <h3 class="text-xs font-semibold uppercase tracking-widest text-primary-500 mb-2">${subtitle}</h3>
+                        <h2 class="text-4xl font-bold mb-6">${title}</h2>
+                        <p class="text-lg text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
+                            ${paragraph1}
+                        </p>
+                        <p class="text-lg text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
+                            ${paragraph2}
+                        </p>
+                        <a href="#contact" class="text-primary-500 font-semibold hover:underline mt-4 inline-block">See my full resume &rarr;</a>
+                    </div>
+                `;
+
+            } catch (error) {
+                console.error("Error loading About Section from Google Sheet:", error);
+                aboutContentContainer.innerHTML = `<div class="col-span-full text-center py-10 text-red-500 dark:text-red-400">Failed to load About content. Please ensure the Google Sheet tab (GID: ${ABOUT_GID}) is shared publicly.</div>`;
+            }
+        }
+
+
+        // Load data when the application starts
+        loadHeroSection();
+        loadAboutSection();
+        loadSkills();
+        loadProjects();
+
+    </script>
+</body>
+</html>
